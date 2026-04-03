@@ -11,7 +11,6 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-
         rowList = []
         columnList = []
         boxList = []
@@ -19,8 +18,12 @@ class Solution(object):
         for _ in range(9):
             rowList.append([0]*9)
             columnList.append([0]*9)
-            boxList.append([[0]*9]*3)
-        
+            #boxList.append([[0]*9]*3)
+
+        boxList = [[[0]*9 for _ in range(3)] for _ in range(3)]
+
+        print(boxList[0][0])
+
         for i in range(9):
             for j in range(9):
                 number = board[i][j]
@@ -29,25 +32,18 @@ class Solution(object):
 
                 rowList[i][number-1] += 1
                 columnList[j][number-1] += 1
+                print(i, j, number-1)
                 boxList[i//3][j//3][number-1] += 1
-        
+
+                if rowList[i][number-1]>1 or columnList[j][number-1]>1 or boxList[i//3][j//3][number-1]>1:
+                    return False
         print(rowList)
         print(columnList)
         print(boxList)
-
-        for i in range(9):
-            for j in range(9):
-                n1 = rowList[i][j]
-                n2 = columnList[i][j]
-
-                if n1 > 1 or n2>1:
-                    return False
-
-                for k in range(9):
-                    n3 = boxList[i][j][k]
-                    if n3>1:
-                        return False
+        
         return True
+        
+
 
         
 # @lc code=end
