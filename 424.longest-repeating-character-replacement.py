@@ -13,31 +13,13 @@ class Solution(object):
         :rtype: int
         """
 
-        l,r=0,0
-        n=len(s)
-        count=0
         best=0
-        while r<n and l<=r:
-            if s[r]!=s[l]:
-                count+=1
+        chars=set(s)
 
-            if count>k:
-                if l+1>=n:
-                    break
-                if s[l+1]!=s[l]:
-                    count-=1
-                l+=1
-                continue
-
-            length = r-l+1
-            best = max(best,length)
-            print(l,r)
-            print(count)
-            print(best)
-            r+=1
-
+        for c in chars:
+            count=0
+            l=0
             
-        return best
 
         
 # @lc code=end

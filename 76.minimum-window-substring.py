@@ -21,6 +21,8 @@ class Solution(object):
         
         l,r=0,0
 
+        n = len(s)
+
         prefix = []
 
         s_length = len(s)
@@ -47,13 +49,33 @@ class Solution(object):
 
             prefix.append(new_list)
 
-        while 1:
+        while r<n:
+            window_freq = [0]*26
             if l>0:
-                window_freq = prefix[r]-prefix[l-1]
+                for i in range(26):
+                    window_freq[i] = prefix[r][i]-prefix[l-1][i]
             if l==0:
                 window_freq = prefix[r]
             
-            if 
+            contained = True
+
+            for i in range(26):
+                difference_in_freq = window_freq[i]-t_freq[i]
+                if difference_in_freq<0:
+                    contained = False
+            
+            if contained:
+                l+=1
+            else:
+                r+=1
+        
+        output_string = ""
+
+        for i in range(l, r+1):
+            letter = s[i]
+            output_string += letter
+        return output_string
+
 
 
         
