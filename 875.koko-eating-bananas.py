@@ -16,12 +16,37 @@ class Solution(object):
         :rtype: int
         """
 
-        n = len(piles)
-        l=0
+        piles.sort()
+        n=len(piles)
+        l=1
         r=piles[-1]
-        best = float('inf')
+        best=float('inf')
 
-        while l<r:
+        while l<=r:
+            hours_needed=0
+            m = (l+r)//2
+            for i in range(n):
+                if piles[i]>=m:
+                    index=i
+                    break
+            hours_needed += index
+
+            for i in range(index, n):
+                ceil = math.ceil(piles[i]/m)
+                hours_needed += ceil
+            
+            if hours_needed == h:
+                best = min(best,m)
+                r = m-1
+            elif hours_needed > h:
+                l = m+1
+            else:
+                best = min(best,m)
+                r = m-1
+        return best
+
+            
+            
             
         
         
