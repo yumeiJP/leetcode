@@ -16,13 +16,60 @@ class Solution(object):
         :rtype: int
         """
 
+        piles = sorted(piles)
         n = len(piles)
-        l=0
+        l=1
+        #l=piles[0]
         r=piles[-1]
-        best = float('inf')
+        guess = 0
+        
+        while l<=r:
+            m = (l+r)//2
+            index=0
+            num = m
+            hours = 0
+            for i in range(n):
+                search_num = piles[i]
+                if num > search_num:
+                    index = i
+                    break
 
-        while l<r:
+            hours += index
+
+            for i in range(i,n):
+                ceil = math.ceil(piles[i]/m)
+                hours += ceil
+
+            print(l,r,m)
             
+            if hours==h:
+                guess = m
+                r = m-1
+            elif hours>h:
+                l = m+1
+            else:
+                r = m-1
+        return guess
+
+"""
+[3,6,7,11], h=8
+
+l=3,r=11 --> m = 7
+hours = 3+2=5
+hours < h --> move r
+
+l=3, r=6 -> m = 4
+hours = 1 + (2+2+3)=8
+guess=4
+
+l=3,r=4 -> m=3
+hours = 1+(2+3+3)=9
+
+
+"""
+
+
+
         
         
 
