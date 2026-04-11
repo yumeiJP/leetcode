@@ -10,12 +10,6 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-
-class ListNode(object):
-    def __init__(self, val=0, next=None):
-        self.val=val
-        self.next=next
-
 class Solution(object):
     def reverseList(self, head):
         """
@@ -23,9 +17,21 @@ class Solution(object):
         :rtype: Optional[ListNode]
         """
 
-        current = head.next
+        current = head
+
+        if not current:
+            return head
+
+        pastnode = ListNode(current.val)
+        current = current.next
 
         while current:
+            newnode = ListNode(current.val, pastnode)
+            pastnode = newnode
+            current = current.next
+        
+        return pastnode
+            
              
         
 # @lc code=end
