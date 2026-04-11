@@ -14,41 +14,40 @@ class Solution(object):
         :rtype: float
         """
 
-        l1 = len(nums1)
-        l2 = len(nums2)
+        A,B = nums1,nums2
+        total = len(nums1)+len(nums2)
+        half=total//2
+        if len(B)<len(A):
+            A,B=B,A
 
-        total = l1+l2
-        half = int((l1+l2)/2)
+        l=0
+        r=len(A)-1
 
-        if l1 < l2:
-            minnums = nums1
-            maxnums = nums2
-        else:
-            minnums = nums2
-            maxnums = nums1
+        while 1:
+            i_a=(l+r)//2
+            i_b=half-i_a - 2
 
-        l = 0
-        r = len(minnums)
+            Aleft=A[i_a] if i_a>=0 else float('-inf')
+            Aright=A[i_a+1] if i_a+1<len(A) else float('inf')
+            Bleft=B[i_b] if i_b>=0 else float('-inf')
+            Bright=B[i_b+1] if i_b+1<len(B) else float('inf')
 
-        while True:
-            m = int((l+r)/2)
+            if Aleft <= Bright and Bleft < Aright:
+                if total%2:
+                    return min(Aright, Bright)
+                else:
+                    return (max(Aleft, Bleft) + min(Aright, Bright))/2
+            elif Aleft > Bright:
+                r=i_a-1
+            else:
+                l=i_a+1
+            
 
-            other_length = half-m
 
-            if maxnums[other_length] > minnums[m+1]:
-                #m too small
-                l = m
-            elif minnums[m+1] > maxnums[other_length]:
-                #m too large
-                r = m
-            else: break
-        
-        n1 = l1[m+1]
-        n2 = l2[m+1]
-        if total%2 == 1:
-            return min(n1, n2)
-        elif total%2 == 0:
-            return (n1+n2)/2
+
+
+
+
 
 
 
