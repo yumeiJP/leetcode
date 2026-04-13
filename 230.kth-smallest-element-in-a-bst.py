@@ -36,12 +36,12 @@ class Solution(object):
 
         count = counterManage(root.left)
 
-        if k<=count:
-            return self.kthSmallest(root.left)
+        if k<count+1:
+            return self.kthSmallest(root.left, k)
         elif k==count+1:
             return root.val
         else:
-            return self.kthSmallest(root.right, )
+            return self.kthSmallest(root.right, k-count-1)
         
 # @lc code=end
 
