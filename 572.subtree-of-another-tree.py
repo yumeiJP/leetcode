@@ -20,44 +20,21 @@ class Solution(object):
         :rtype: bool
         """
 
-        valid = True
-
         def dfs(curr1, curr2):
-            nonlocal valid
-            left1, left2,right1,right2=0,0,0,0
 
             if not curr1 and not curr2:
-                return
+                return True
             if not curr1 and curr2:
-                valid = False
-                return
+                return False
             if curr1 and not curr2:
-                valid = False
-                return
-
-            if curr1.left: left1 = 1
-            if curr1.right: right1=1
-            if curr2.left:left2=1
-            if curr2.right:right2=1
-
-            print(left1, left2, right1, right2)
-
-            if (left1!=left2)or(right1!=right2):
-                valid = False
-                return
+                return False
             
             if curr1.val != curr2.val:
-                valid = False
-                return
-            
-            if curr1.left and curr2.left:
-                dfs(curr1.left, curr2.left)
-            if curr1.right and curr2.right:
-                dfs(curr1.right, curr2.right)
+                return False
+
+            return dfs(curr1.left, curr2.left) and dfs(curr1.right, curr2.right)
         
-        dfs(p,q)
-            
-        return valid
+        return dfs(p,q)
 
     def isSubtree(self, root, subRoot):
         """
