@@ -13,33 +13,24 @@ class Solution(object):
         :rtype: List[List[int]]
         """
 
-        hashmap = {}
-        for coord in points:
-            val = coord[0]**2 + coord[1]**2
-            if hashmap.get(val, "skibidi")=="skibidi":
-                hashmap[val] = []
-            hashmap[val].append(coord)
-
         heap = []
         heapq.heapify(heap)
         for i in range(k):
             coord = points[i]
             val = coord[0]**2 + coord[1]**2
-            heapq.heappush(heap, -val)
+            heapq.heappush(heap, (-val, coord))
         
         for i in range(k, len(points)):
-            
             coord = points[i]
             val = coord[0]**2 + coord[1]**2
-            if val < -heap[0]:
+            if val < -heap[0][0]:
                 heapq.heappop(heap)
-                heapq.heappush(heap, -val)
+                heapq.heappush(heap, (-val, coord))
         output = []
 
         while len(output)<k:
-            num = heapq.heappop(heap)
-            ls = hashmap[-num]
-            output.append(ls.pop())
+            tuple = heapq.heappop(heap)
+            output.append(tuple[1])
         
         return output
         
