@@ -19,56 +19,36 @@ class Solution(object):
 
         hashmap = {}
         heap = []
+        queue = collections.deque([])
 
-        for task in tasks:
-            hashmap[task] = hashmap.get(task, 0) + 1
+        if n == 0:
+            return len(tasks)
+
+        for num in tasks:
+            hashmap[num] = hashmap.get(num, 0) + 1
         
         for key in hashmap.keys():
-            val = hashmap[key]
-            tuple = (-val, key)
-            heap.append(tuple)
-        
+            freq = hashmap[key]
+            heap.append(-freq)
+
         heapq.heapify(heap)
 
-        count = 0
-        deque = collections.deque()
+        time = 0
 
-        while 1:
-            print(heap, deque)
-            if not heap and ((len(deque)==1 and deque[0] is int) or not deque):
-                break
+        while heap or queue:
+            time += 1
+            if heap:
+                freq = heapq.heappop(heap)
+                freq = freq+1
 
-            k = len(deque)
+                if freq:
+                    queue.append((freq,time+n))  
 
-            if deque:
-                if deque[0] == 1:
-                    deque.popleft()
-                    if deque:
-                        insert = deque.popleft()
-                        heapq.heappush(heap, insert)
-                else:
-                    if deque[0] is int:
-                        deque[0] = deque[0] - 1
-            if not heap: 
-                count += 1
-                continue
-            tuple = heapq.heappop(heap)
-            print("spec", tuple, deque)
-            if k==0:
-                if n > 1:
-                    deque.append(n-1)
-                    deque.append((tuple[0]+1, tuple[1]))
-            else:
-                if -tuple[0] > 1:
-                    deque.append((tuple[0]+1, tuple[1]))
-            count += 1
-        
-        return count
-
-        
-
-
-
+            if queue and queue[0][1] == time:
+                #time to pop
+                tuple = queue.popleft()
+                heapq.heappush(heap, tuple[0])
+        return time
         
 # @lc code=end
 
