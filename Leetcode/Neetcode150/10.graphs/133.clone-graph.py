@@ -11,11 +11,15 @@ class Solution(object):
         :rtype: Node
         """
 
+        hashmap = {}
+
         def dfs(node):
-            if self.neighbors:
-                for neighbor in self.neighbors:
-                    curr = dfs(neighbor)
-                    node.neighbors.append(curr)
-            return node
-            
-        
+            if node in hashmap:
+                return hashmap[node]
+
+            clone = Node(node.val)
+            hashmap[node] = clone
+            for neighbor in node.neighbors:
+                clone.neighbors.append(dfs(neighbor))
+            return clone
+        return dfs(node) if node else None
